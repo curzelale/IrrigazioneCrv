@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="GUI.MWM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI.MWM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="725" d:DesignWidth="1070">
+    <Viewbox Stretch="Uniform">
+        <Canvas Width="1070" Height="725">
+            <Canvas.Background>
+                <ImageBrush ImageSource="/MVVM/View/sfondo.png"/>
+            </Canvas.Background>
+
+            <Line  x:Name="LineS1A"
+                X1="25" Y1="25"  
+                X2="200" Y2="200"  
+                Stroke="{Binding LineS1Brush}"  
+                StrokeThickness="7" Canvas.Left="104" Canvas.Top="344" Height="208" Width="221" RenderTransformOrigin="0.587,0.565" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Line.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="6.1"/>
+                        <TranslateTransform X="-0.803" Y="1.079"/>
+                    </TransformGroup>
+                </Line.RenderTransform>
+            </Line>
+            <Line  x:Name="LineS1B"
+                X1="0" Y1="0"  
+                X2="40" Y2="40"  
+                Stroke="{Binding LineS1Brush}"  
+                StrokeThickness="7" Canvas.Left="144" Canvas.Top="309" Height="59" Width="56" RenderTransformOrigin="0.519,0.538" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                <Line.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-76.656"/>
+                        <TranslateTransform X="-0.12" Y="-0.489"/>
+                    </TransformGroup>
+                </Line.RenderTransform>
+            </Line>
+            <Line  x:Name="LineS1C"
+                X1="0" Y1="0"  
+                X2="40" Y2="40"  
+                Stroke="{Binding LineS1Brush}"  
+                StrokeThickness="7" Canvas.Left="146" Canvas.Top="293" Height="59" Width="56" RenderTransformOrigin="0.519,0.538" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                <Line.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="7.359"/>
+                        <TranslateTransform X="-0.12" Y="-0.489"/>
+                    </TransformGroup>
+                </Line.RenderTransform>
+            </Line>
+
+            <Line  x:Name="LineS2B"
+                X1="0" Y1="0"  
+                X2="230" Y2="230"  
+                Stroke="{Binding LineS2Brush}"  
+                StrokeThickness="7" Canvas.Left="438" Canvas.Top="504" Height="244" Width="242" RenderTransformOrigin="0.549,0.617" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Line.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-33.777"/>
+                        <TranslateTransform X="7.803" Y="4.052"/>
+                    </TransformGroup>
+                </Line.RenderTransform>
+            </Line>
+
+            <Line  x:Name="LineS2A"
+                X1="40" Y1="40"  
+                X2="100" Y2="100"  
+                Stroke="{Binding LineS2Brush}"  
+                StrokeThickness="7" Canvas.Left="275" Canvas.Top="530" Height="104" Width="104" RenderTransformOrigin="0.587,0.565" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Line.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-26.478"/>
+                        <TranslateTransform X="-0.803" Y="1.079"/>
+                    </TransformGroup>
+                </Line.RenderTransform>
+            </Line>
+
+            <Image x:Name="waterSensorImg" Source="{Binding RainSensorIcon}" Height="181" Width="128" Canvas.Left="863" Canvas.Top="13" />
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="2" IsChecked="{Binding Valve2}" x:Name="cb2" Canvas.Left="365" Canvas.Top="360" Content="2"/>
+            <Label Content="G1" Background="White" FontWeight="Bold" Canvas.Left="365" Canvas.Top="385" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="4" IsChecked="{Binding Valve4}" x:Name="cb4" Canvas.Left="480" Canvas.Top="372" Content="4"/>
+            <Label Content="G2" Background="White" FontWeight="Bold" Canvas.Left="480" Canvas.Top="398" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="3" IsChecked="{Binding Valve3}" x:Name="cb3a" Canvas.Left="580" Canvas.Top="258" Content="3"/>
+            <Label Content="G3A" Background="White" FontWeight="Bold" Canvas.Left="576" Canvas.Top="287" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="3" IsChecked="{Binding Valve3}" x:Name="cb3b" Canvas.Left="670" Canvas.Top="202" Content="3"/>
+            <Label Content="G3B" Background="White" FontWeight="Bold" Canvas.Left="666" Canvas.Top="231" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="6" IsChecked="{Binding Valve6}" x:Name="cb6" Canvas.Left="759" Canvas.Top="490" Content="6"/>
+            <Label Content="G4" Background="White" FontWeight="Bold" Canvas.Left="755" Canvas.Top="519" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="8" IsChecked="{Binding Valve8}" x:Name="cb7a" Canvas.Left="232" Canvas.Top="477" RenderTransformOrigin="0.563,0.583" HorizontalAlignment="Left" VerticalAlignment="Top" Content="8"/>
+            <Label Content="S1" Background="White" FontWeight="Bold" Canvas.Left="215" Canvas.Top="506" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.561,0.49"/>
+
+            <CheckBox Style="{StaticResource CheckboxTheme}" Command="{Binding ToggleValveCommand}" CommandParameter="9" IsChecked="{Binding Valve9}" x:Name="cb7b" Canvas.Left="399" Canvas.Top="600" RenderTransformOrigin="0.563,0.583" HorizontalAlignment="Center" VerticalAlignment="Top" Content="9"/>
+            <Label Content="S2" Background="White" FontWeight="Bold" Canvas.Left="391" Canvas.Top="629" HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" RenderTransformOrigin="0.561,0.49"/>
+
+            <CheckBox Content="Ciclo continuo" x:Name="cbcycle" FontSize="13" Command="{Binding ToggleCycleCommand}" IsChecked="{Binding CycleActive}">
+                <CheckBox.LayoutTransform>
+                    <ScaleTransform ScaleX="2.5" ScaleY="2.5" />
+                </CheckBox.LayoutTransform>
+            </CheckBox>
+
+            <!-- Idranti -->
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr1" Canvas.Left="268" Canvas.Top="561" Content="20" />
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr2" Canvas.Left="592" Canvas.Top="465" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr3" Canvas.Left="337" Canvas.Top="389" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr4" Canvas.Left="421" Canvas.Top="348" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr5" Canvas.Left="459" Canvas.Top="325" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr6" Canvas.Left="568" Canvas.Top="232" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr7" Canvas.Left="399" Canvas.Top="404" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <CheckBox Visibility="Visible" Style="{StaticResource CheckboxThemeIdr}" Command="{Binding ToggleHydrantCommand}" IsChecked="{Binding IdrStatus}" x:Name="idr8" Canvas.Left="35" Canvas.Top="80" Content="20" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-5.688,-11.875" Height="60" Width="55" />
+        </Canvas>
+    </Viewbox>
+</UserControl>

@@ -1,0 +1,44 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+project.nuget.cache
+*.nuget.props
+*.nuget.targets
+packages/
+.nuget/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Publish / release artifacts
+publish/
+*.zip
+*.msi
+*.msix
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Arduino build artifacts
+*.elf
+*.hex
+*.bin
+build/

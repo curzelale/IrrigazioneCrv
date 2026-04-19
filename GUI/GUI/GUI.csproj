@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="MVVM\View\sfondo.png" />
+    <None Remove="MVVM\View\LogoCrv.png" />
+    <None Remove="MVVM\View\water-drop-blue.png" />
+    <None Remove="MVVM\View\water_active.png" />
+    <None Remove="MVVM\View\water_drop_black.png" />
+    <None Remove="MVVM\View\water_drop_blue.png" />
+    <None Remove="Theme\valvola_off.png" />
+    <None Remove="Theme\valvola_on.png" />
+	<None Remove="Theme\idrante_off.png" />
+	<None Remove="Theme\idrante_on.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="MVVM\View\sfondo.png" />
+    <Resource Include="MVVM\View\LogoCrv.png" />
+    <Resource Include="MVVM\View\water-drop-blue.png" />
+    <Resource Include="MVVM\View\water_active.png" />
+    <Resource Include="MVVM\View\water_drop_black.png" />
+    <Resource Include="MVVM\View\water_drop_blue.png" />
+    <Resource Include="Theme\valvola_off.png" />
+    <Resource Include="Theme\valvola_on.png" />
+    <Resource Include="Theme\idrante_off.png" />
+    <Resource Include="Theme\idrante_on.png" />
+  </ItemGroup>
+
+</Project>
