@@ -410,6 +410,7 @@ void executeCommad(String receivedString, EthernetClient client){
 void setContinuosCycle(String data){
   if(data == "ON"){
     continuosCycleActive = true;
+    continuosCycleRunning = false;
     elapsedIntertime = 0;
     currentValveIndex = 0;
     lastValveStartTime = 0;
@@ -418,6 +419,7 @@ void setContinuosCycle(String data){
     setRelay();
   }else{
     continuosCycleActive = false;
+    continuosCycleRunning = false;
     elapsedIntertime = 0;
     currentValveIndex = 0;
     lastValveStartTime = 0;
