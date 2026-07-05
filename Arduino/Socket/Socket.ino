@@ -216,6 +216,7 @@ void loop() {
       stringIn = stringIn + c;
     }
     executeCommad(stringIn, client);
+    client.stop();
   }
   if(!continuosCycleActive && (!useRainSensor || !digitalRead(CONTROLLINO_A0))){
     checkScheduler();
