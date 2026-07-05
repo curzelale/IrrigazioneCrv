@@ -255,7 +255,7 @@ void manageContinuosCycle(){
     lastValveStartTime = millis();
     setValveStatus(valveOrder[currentValveIndex], true);
     Serial.println("CICLO continuo avviato");
-    Serial.println(getStatusHumanReadable());
+    //Serial.println(getStatusHumanReadable());
   }else if(continuosCycleRunning){
     int runTime = abs((millis() - lastValveStartTime))/1000;
     Valve currentValve = allValves[valveOrder[currentValveIndex]];
@@ -283,7 +283,7 @@ void manageContinuosCycle(){
         lastValveStartTime = millis();
         setValveStatus(valveOrder[currentValveIndex], true);
         setValveStatus(valveOrder[prevValveIndex], false);
-        Serial.println(getStatusHumanReadable());
+        //Serial.println(getStatusHumanReadable());
       }
     }
   }else{
@@ -697,7 +697,7 @@ String getStatus(){
   stat = stat + "\t\"rainSensor\":"+ !digitalRead(CONTROLLINO_A0)+"\n";
   stat = stat + "}";
 
-  Serial.println(getStatusHumanReadable());
+  //Serial.println(getStatusHumanReadable());
   return stat;
 }
 
