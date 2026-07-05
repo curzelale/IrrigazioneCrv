@@ -210,11 +210,13 @@ void loop() {
   EthernetClient client = server.available();
   if (client.connected()) {
     Serial.println("Client connesso");
-    stringIn = "";
-    while (client.available()) {
-      char c = client.read();
-      stringIn = stringIn + c;
+    char buf[64];
+    byte i = 0;
+    while (client.available() && i < sizeof(buf) - 1) {
+      buf[i++] = client.read();
     }
+    buf[i] = '\0';
+    stringIn = buf;
     executeCommad(stringIn, client);
     client.stop();
   }
