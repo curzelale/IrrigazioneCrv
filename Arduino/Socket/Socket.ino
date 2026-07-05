@@ -105,6 +105,12 @@ class Valve{//valutare se aggiungere il pin a cui è collegata
 
 Valve allValves[VALVE_COUNT];
 
+// Stampano la risposta direttamente sull'output (client di rete o Serial), senza costruire String.
+// Print e' la classe base comune a EthernetClient e Serial.
+void printAll(Print &out);
+void printStatus(Print &out);
+void printSettings(Print &out);
+
 void setup() {
   initLib();
   initPinStatus();
@@ -382,7 +388,7 @@ void executeCommad(String receivedString, EthernetClient client){
   Serial.print(F("DATA: "));
   Serial.println(data);
   if(cmd == "GET_ALL"){
-    client.print(getAll());
+    printAll(client);
   }else if(cmd == "GET_ALL_SERIAL"){
     Serial.print(F("OFF_TIME: "));
     Serial.println(isOffTime);
@@ -684,23 +690,20 @@ bool checkMainValveActive(){
   return false;
 }
 
-String getStatus(){
-  String stat = "{\n";
-  stat = stat + "\t\"valve1\":"+ allValves[0].isOn +",\n";
-  stat = stat + "\t\"valve2\":"+ allValves[1].isOn +",\n";
-  stat = stat + "\t\"valve3\":"+ allValves[2].isOn +",\n";
-  stat = stat + "\t\"valve4\":"+ allValves[3].isOn +",\n";
-  stat = stat + "\t\"valve5\":"+ allValves[4].isOn +",\n";
-  stat = stat + "\t\"valve6\":"+ allValves[5].isOn +",\n";
-  stat = stat + "\t\"valve7\":"+ allValves[6].isOn +",\n";
-  stat = stat + "\t\"valve8\":"+ allValves[7].isOn +",\n";
-  stat = stat + "\t\"valve9\":"+ allValves[8].isOn +",\n";
-  stat = stat + "\t\"idr\":"+ hydrantOn +",\n";
-  stat = stat + "\t\"rainSensor\":"+ !digitalRead(CONTROLLINO_A0)+"\n";
-  stat = stat + "}";
-
-  //Serial.println(getStatusHumanReadable());
-  return stat;
+void printStatus(Print &out){
+  out.print(F("{\n"));
+  out.print(F("\t\"valve1\":")); out.print(allValves[0].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve2\":")); out.print(allValves[1].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve3\":")); out.print(allValves[2].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve4\":")); out.print(allValves[3].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve5\":")); out.print(allValves[4].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve6\":")); out.print(allValves[5].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve7\":")); out.print(allValves[6].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve8\":")); out.print(allValves[7].isOn); out.print(F(",\n"));
+  out.print(F("\t\"valve9\":")); out.print(allValves[8].isOn); out.print(F(",\n"));
+  out.print(F("\t\"idr\":")); out.print(hydrantOn); out.print(F(",\n"));
+  out.print(F("\t\"rainSensor\":")); out.print(!digitalRead(CONTROLLINO_A0)); out.print(F("\n"));
+  out.print(F("}"));
 }
 
 
@@ -729,33 +732,31 @@ String getStatusHumanReadable(){
   return stat;
 }
 
-String getSettings(){
-  String stat = "{\n";
-  stat = stat + "\t\"mode\":"+ mode +",\n";
-  stat = stat + "\t\"startTime1\":\""+ startH1 + ":" + startMinute1 +"\",\n";
-  stat = stat + "\t\"startTime2\":\""+ startH2 + ":" + startMinute2 +"\",\n";
-  stat = stat + "\t\"currentControllerDate\":\""+ getDate() +"\",\n";
-  stat = stat + "\t\"onTime1\":"+ allValves[1].onTime +",\n";
-  stat = stat + "\t\"onTime2\":"+ allValves[2].onTime +",\n";
-  stat = stat + "\t\"onTime3\":"+ allValves[3].onTime +",\n";
-  stat = stat + "\t\"onTime4\":"+ allValves[5].onTime +",\n";
-  stat = stat + "\t\"onTime5\":"+ allValves[6].onTime +",\n";
-  stat = stat + "\t\"onTime6\":"+ allValves[7].onTime +",\n";
-  stat = stat + "\t\"onTime7\":"+ allValves[8].onTime +",\n";
-  stat = stat + "\t\"continuosCycleActive\":"+ continuosCycleActive +",\n";
-  stat = stat + "\t\"cycleIntertime\":"+ continuosCycleIntertime +",\n";
-  stat = stat + "\t\"rainSensorActive\":"+ useRainSensor +"\n";
-  stat = stat + "}";
-  return stat;
+void printSettings(Print &out){
+  out.print(F("{\n"));
+  out.print(F("\t\"mode\":")); out.print(mode); out.print(F(",\n"));
+  out.print(F("\t\"startTime1\":\"")); out.print(startH1); out.print(F(":")); out.print(startMinute1); out.print(F("\",\n"));
+  out.print(F("\t\"startTime2\":\"")); out.print(startH2); out.print(F(":")); out.print(startMinute2); out.print(F("\",\n"));
+  out.print(F("\t\"currentControllerDate\":\"")); out.print(getDate()); out.print(F("\",\n"));
+  out.print(F("\t\"onTime1\":")); out.print(allValves[1].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime2\":")); out.print(allValves[2].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime3\":")); out.print(allValves[3].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime4\":")); out.print(allValves[5].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime5\":")); out.print(allValves[6].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime6\":")); out.print(allValves[7].onTime); out.print(F(",\n"));
+  out.print(F("\t\"onTime7\":")); out.print(allValves[8].onTime); out.print(F(",\n"));
+  out.print(F("\t\"continuosCycleActive\":")); out.print(continuosCycleActive); out.print(F(",\n"));
+  out.print(F("\t\"cycleIntertime\":")); out.print(continuosCycleIntertime); out.print(F(",\n"));
+  out.print(F("\t\"rainSensorActive\":")); out.print(useRainSensor); out.print(F("\n"));
+  out.print(F("}"));
 }
 
 //qua da testare
-String getAll(){
-  String res = "{\n";
-  res = res + "\t\"statuses\":" + getStatus() + ",\n";
-  res = res +"\t\"settings\":" + getSettings() + "\n";
-  res = res + "}";
-  return res;
+void printAll(Print &out){
+  out.print(F("{\n"));
+  out.print(F("\t\"statuses\":")); printStatus(out); out.print(F(",\n"));
+  out.print(F("\t\"settings\":")); printSettings(out); out.print(F("\n"));
+  out.print(F("}"));
 }
 
 

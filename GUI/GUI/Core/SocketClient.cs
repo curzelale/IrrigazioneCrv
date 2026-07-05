@@ -43,12 +43,22 @@ namespace GUI.Core
 
                     if (needResponse)
                     {
-                        byte[] buffer = new byte[2048]; // Increased buffer size
-                        int bytesRead = await sender.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
-                        res = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                        // Il controllino invia la risposta a pezzi e chiude la connessione (client.stop) alla fine.
+                        // Leggiamo in loop finche' non arriva 0 (fine stream), cosi' ricostruiamo sempre la risposta completa.
+                        byte[] buffer = new byte[2048];
+                        var sb = new StringBuilder();
+                        int bytesRead;
+                        do
+                        {
+                            bytesRead = await sender.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
+                            if (bytesRead > 0)
+                                sb.Append(Encoding.ASCII.GetString(buffer, 0, bytesRead));
+                        } while (bytesRead > 0);
+                        res = sb.ToString();
                     }
 
-                    sender.Shutdown(SocketShutdown.Both);
+                    // La connessione potrebbe essere gia' stata chiusa dal controllino: non deve far fallire il comando.
+                    try { sender.Shutdown(SocketShutdown.Both); } catch { }
                     success = true;
                 }
                 catch (Exception ex)
