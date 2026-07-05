@@ -209,7 +209,7 @@ void loop() {
 
   EthernetClient client = server.available();
   if (client.connected()) {
-    Serial.println("Client connesso");
+    Serial.println(F("Client connesso"));
     char buf[64];
     byte i = 0;
     while (client.available() && i < sizeof(buf) - 1) {
@@ -256,20 +256,20 @@ void manageContinuosCycle(){
     elapsedIntertime = 0;
     lastValveStartTime = millis();
     setValveStatus(valveOrder[currentValveIndex], true);
-    Serial.println("CICLO continuo avviato");
+    Serial.println(F("CICLO continuo avviato"));
     //Serial.println(getStatusHumanReadable());
   }else if(continuosCycleRunning){
     int runTime = abs((millis() - lastValveStartTime))/1000;
     Valve currentValve = allValves[valveOrder[currentValveIndex]];
     if(runTime > currentValve.onTime){
-      Serial.println("CICLO CONTINUO: superato valve time");
+      Serial.println(F("CICLO CONTINUO: superato valve time"));
       int prevValveIndex = currentValveIndex;
       //prima devo accendere la nuova valvola e poi spegnere quella vecchi altrimenti la pompa si spegne e riaccende
       
       currentValveIndex += 1;
       //controllo che la valvola non sia l'ultima
       if(currentValveIndex >= 6){
-        Serial.println("CICLO CONTINUO: superato l'inidice 6");
+        Serial.println(F("CICLO CONTINUO: superato l'inidice 6"));
         setValveStatus(valveOrder[prevValveIndex], false);
         currentValveIndex = 0;
         lastValveStartTime = 0;
@@ -280,7 +280,7 @@ void manageContinuosCycle(){
         setRelay();
         lastIntertimeCheck = millis();
       }else{
-        Serial.print("CICLO CONTINUO: Cambio valvola id: ");
+        Serial.print(F("CICLO CONTINUO: Cambio valvola id: "));
         Serial.println(currentValveIndex);
         lastValveStartTime = millis();
         setValveStatus(valveOrder[currentValveIndex], true);
@@ -309,9 +309,9 @@ void checkScheduler(){
     checkTime();
     readedHour = Controllino_GetHour();
     readedMinue = Controllino_GetMinute();
-    Serial.print("Controllo scheduler, ora letta:   ");
+    Serial.print(F("Controllo scheduler, ora letta:   "));
     Serial.print(readedHour);
-    Serial.print(":");
+    Serial.print(F(":"));
     Serial.println(readedMinue);
     lastTimeCheck = millis();
   }
@@ -327,7 +327,7 @@ void checkScheduler(){
     currentValveIndex = 0;
     lastValveStartTime = millis();
     setValveStatus(valveOrder[currentValveIndex], true);
-    Serial.println("Scheduler avviato");
+    Serial.println(F("Scheduler avviato"));
   }else if (schedulerRunning){
     int runTime = abs((millis() - lastValveStartTime))/1000;
     Valve currentValve = allValves[valveOrder[currentValveIndex]];
@@ -338,7 +338,7 @@ void checkScheduler(){
       currentValveIndex += 1;
       //controllo che la valvola non sia l'ultima
       if(currentValveIndex >= 6){
-        Serial.println("Reset, superato l'inidice 6");
+        Serial.println(F("Reset, superato l'inidice 6"));
         setValveStatus(valveOrder[prevValveIndex], false);
         currentValveIndex = 0;
         lastValveStartTime = 0;
@@ -347,7 +347,7 @@ void checkScheduler(){
         isAllValveOff();
         setRelay();
       }else{
-        Serial.print("Cambio valvola id: ");
+        Serial.print(F("Cambio valvola id: "));
         Serial.println(currentValveIndex);
         lastValveStartTime = millis();
         setValveStatus(valveOrder[currentValveIndex], true);
@@ -377,33 +377,33 @@ void executeCommad(String receivedString, EthernetClient client){
   byte dividerPos = receivedString.indexOf(':');
   String cmd = receivedString.substring(0,dividerPos);
   String data = receivedString.substring(dividerPos+1,receivedString.indexOf(';'));
-  Serial.print("CMD: ");
+  Serial.print(F("CMD: "));
   Serial.println(cmd);
-  Serial.print("DATA: ");
+  Serial.print(F("DATA: "));
   Serial.println(data);
   if(cmd == "GET_ALL"){
     client.print(getAll());
   }else if(cmd == "GET_ALL_SERIAL"){
-    Serial.print("OFF_TIME: ");
+    Serial.print(F("OFF_TIME: "));
     Serial.println(isOffTime);
   }else if(cmd == "GET_DATE"){
     client.print(getDate());
   }else if(cmd == "SET_DATE"){
     setDate(data);
-    client.print("OK");
+    client.print(F("OK"));
   }else if(cmd == "SET_PARAM"){
     //qua passare il parametro
     byte innerDividerPos = data.indexOf('#');
     String pName = data.substring(0,innerDividerPos);
     String pValue = data.substring(innerDividerPos+1,data.indexOf(';'));
     setParam(pName, pValue);
-    client.print("OK");
+    client.print(F("OK"));
   }else if(cmd == "MANUAL_CONTROL" && (!isOffTime || mode == 3)){
     setValveStatusManual(data);
     isAllValveOff();
   }else if(cmd == "STORE_CHANGES"){
     updateEEPROM();
-    client.print("OK");
+    client.print(F("OK"));
   }else if (cmd == "CONTINUOS_CYCLE"){
     setContinuosCycle(data);
     isAllValveOff();
@@ -488,9 +488,9 @@ void setParam(String paramName, String paramValue){
     startH2 = h.toInt();
     startMinute2 = m.toInt();
   }else if(paramName == "ONTIME1"){
-    Serial.print("name :");
+    Serial.print(F("name :"));
     Serial.println(paramName);
-    Serial.print("value :");
+    Serial.print(F("value :"));
     Serial.println(paramValue);
     allValves[1].setOnTime(paramValue.toInt());
   }else if(paramName == "ONTIME2"){
@@ -524,7 +524,7 @@ void setValveStatusManual(String data){
   Serial.println(status);
 
   if(valveId=="IDR"){
-    Serial.println("Controllo idrante");
+    Serial.println(F("Controllo idrante"));
     if(status == "ON"){
       hydrantOn = true;
       setPumpStatus(true);
@@ -535,7 +535,7 @@ void setValveStatusManual(String data){
       setPumpStatus(false);
     }
   }else{
-    Serial.println("Comando valvola");
+    Serial.println(F("Comando valvola"));
     Valve currentValve = allValves[valveId.toInt()-1];
   
     //vedere se sostituire questa sezione con quella sotto
@@ -571,7 +571,7 @@ void updateMainValve(Valve currentValve){
     allValves[currentValve.valveToActiveId] = mainValve;
 
     if(currentValve.valveToActiveId == 6){
-      Serial.println("Attivata 4 tramite 6");
+      Serial.println(F("Attivata 4 tramite 6"));
       Valve mainValve2 = allValves[4];
       mainValve2.isOn = checkMainValveActive();
       allValves[4] = mainValve2;
@@ -625,7 +625,7 @@ void setPumpStatus(bool isOn){
     digitalWrite(CONTROLLINO_R7, HIGH);
     digitalWrite(CONTROLLINO_R0, LOW);
     digitalWrite(CONTROLLINO_R4, HIGH);
-    Serial.println("pumpOn");
+    Serial.println(F("pumpOn"));
 
     /*R0 HIGH VELOCITà LENTA
     if(!allValves[1].isOn && !allValves[3].isOn && !allValves[2].isOn && !allValves[5].isOn && allValves[6].isOn){
@@ -638,7 +638,7 @@ void setPumpStatus(bool isOn){
   }else{
     digitalWrite(CONTROLLINO_R7, LOW);
     delay(2000);
-    Serial.println("pumpOFF");
+    Serial.println(F("pumpOFF"));
     digitalWrite(CONTROLLINO_R6, HIGH);
     digitalWrite(CONTROLLINO_R0, HIGH);
     digitalWrite(CONTROLLINO_R4, LOW);
