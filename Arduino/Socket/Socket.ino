@@ -217,8 +217,7 @@ void loop() {
     }
     executeCommad(stringIn, client);
   }
-  //if(!continuosCycleActive && (useRainSensor && !digitalRead(CONTROLLINO_A0))){
-  if(!continuosCycleActive){
+  if(!continuosCycleActive && (!useRainSensor || !digitalRead(CONTROLLINO_A0))){
     checkScheduler();
   }else{
     if(schedulerRunning){
